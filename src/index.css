@@ -1,0 +1,449 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-primary: oklch(0.2795 0.0368 260.03);
+  --color-on-primary: oklch(1.0 0 0);
+  --color-secondary: oklch(0.3717 0.0392 257.29);
+  --color-accent: oklch(0.7227 0.192 149.58);
+  --color-background: oklch(0.2077 0.0398 265.75);
+  --color-foreground: oklch(0.9842 0.0034 247.86);
+  --color-muted: oklch(0.3065 0.0362 266.64);
+  --color-border: oklch(0.4455 0.0374 257.28);
+  --color-destructive: oklch(0.6368 0.2078 25.33);
+  --color-ring: oklch(0.2795 0.0368 260.03);
+
+  --color-sidebar: oklch(0.1662 0.0314 264.66);
+  --color-card: oklch(0.2327 0.038 264.66);
+  --color-card-hover: oklch(0.2627 0.038 264.66);
+  --color-text-muted: oklch(0.632 0.024 258.36);
+  --color-success: oklch(0.527 0.154 150.07);
+  --color-warning: oklch(0.666 0.179 58.32);
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  :root,
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+    --color-primary: oklch(0.372 0.044 257.29);
+    --color-on-primary: oklch(1.0 0 0);
+    --color-secondary: oklch(0.928 0.016 258.36);
+    --color-accent: oklch(0.527 0.154 150.07);
+    --color-background: oklch(1.0 0 0);
+    --color-foreground: oklch(0.2077 0.0398 265.75);
+    --color-muted: oklch(0.967 0.003 264.54);
+    --color-border: oklch(0.872 0.01 258.34);
+    --color-destructive: oklch(0.577 0.245 27.33);
+    --color-ring: oklch(0.372 0.044 257.29);
+    --color-sidebar: oklch(0.967 0.003 264.54);
+    --color-card: oklch(1.0 0 0);
+    --color-card-hover: oklch(0.967 0.003 264.54);
+    --color-text-muted: oklch(0.554 0.013 257.28);
+    --color-success: oklch(0.527 0.154 150.07);
+    --color-warning: oklch(0.666 0.179 58.32);
+  }
+
+  ::selection {
+    @apply bg-primary/40 text-foreground;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full hover:bg-border transition-colors;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .card {
+    background-color: var(--color-card);
+    border-radius: 0.75rem;
+    border: 1px solid color-mix(in oklab, var(--color-border) 50%, transparent);
+    padding: 1rem;
+    transition: all 0.2s;
+  }
+
+  .card-interactive {
+    background-color: var(--color-card);
+    border-radius: 0.75rem;
+    border: 1px solid color-mix(in oklab, var(--color-border) 50%, transparent);
+    padding: 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .card-interactive:hover {
+    border-color: var(--color-border);
+    background-color: var(--color-card-hover);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-all duration-150 ease-out active:scale-[0.97]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-all duration-150 ease-out active:scale-[0.97]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none
+           bg-primary text-on-primary hover:bg-primary/90 shadow-sm;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-all duration-150 ease-out active:scale-[0.97]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none
+           bg-secondary text-foreground hover:bg-secondary/80;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-all duration-150 ease-out active:scale-[0.97]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none
+           border border-border bg-transparent hover:bg-muted/50 text-foreground;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-all duration-150 ease-out active:scale-[0.97]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none
+           bg-transparent hover:bg-muted/50 text-foreground;
+  }
+
+  .btn-destructive {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-all duration-150 ease-out active:scale-[0.97]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none
+           bg-destructive text-white hover:bg-destructive/90;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground
+           placeholder:text-text-muted
+           focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent
+           transition-all duration-150;
+  }
+
+  .label {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+           bg-primary/20 text-primary;
+  }
+
+  .badge-accent {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+           bg-accent/20 text-accent;
+  }
+
+  .badge-destructive {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+           bg-destructive/20 text-destructive;
+  }
+}
+
+/* ── Markdown Body ──────────────────────────────────────────── */
+
+.markdown-body {
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+.markdown-body > *:first-child {
+  margin-top: 0;
+}
+
+.markdown-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+  color: var(--color-foreground);
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+.markdown-body h1 { font-size: 1.2rem; }
+.markdown-body h2 { font-size: 1.1rem; }
+.markdown-body h3 { font-size: 1rem; }
+.markdown-body h4 { font-size: 0.9rem; }
+
+.markdown-body p {
+  margin: 0.5em 0;
+  color: var(--color-foreground);
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.2em;
+  margin: 0.5em 0;
+}
+
+.markdown-body li {
+  margin: 0.2em 0;
+}
+
+.markdown-body li > p {
+  margin: 0;
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 1em 0;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.inline-code {
+  background-color: var(--color-muted);
+  color: var(--color-accent);
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+  font-size: 0.85em;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* ── Code Block ─────────────────────────────────────────────── */
+
+.code-block {
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  overflow: hidden;
+  margin: 0.75em 0;
+  background-color: oklch(0.18 0.03 265.75);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.75rem;
+  background-color: oklch(0.22 0.035 264.66);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-border) 40%, transparent);
+}
+
+.code-block-lang {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+.code-block-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  opacity: 0;
+}
+
+.code-block:hover .code-block-copy {
+  opacity: 1;
+}
+
+.code-block-copy:hover {
+  color: var(--color-foreground);
+  background-color: var(--color-muted);
+}
+
+.code-block-pre {
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  color: oklch(0.92 0.01 250);
+}
+
+.code-block-pre code {
+  font-family: inherit;
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+/* ── Markdown Links ─────────────────────────────────────────── */
+
+.markdown-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.15s;
+}
+
+.markdown-link:hover {
+  opacity: 0.8;
+}
+
+/* ── Markdown Table ─────────────────────────────────────────── */
+
+.markdown-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.markdown-table th,
+.markdown-table td {
+  border: 1px solid var(--color-border);
+  padding: 0.45rem 0.65rem;
+  text-align: left;
+}
+
+.markdown-table th {
+  background-color: var(--color-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ── Markdown Blockquote ────────────────────────────────────── */
+
+.markdown-blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding: 0.35rem 0.75rem;
+  margin: 0.75em 0;
+  color: var(--color-text-muted);
+  background-color: color-mix(in oklab, var(--color-muted) 30%, transparent);
+  border-radius: 0 0.4rem 0.4rem 0;
+}
+
+/* ── Streaming Cursor ───────────────────────────────────────── */
+
+.streaming-cursor {
+  display: inline-block;
+  width: 0.5rem;
+  height: 1rem;
+  background-color: var(--color-accent);
+  border-radius: 1px;
+  margin-left: 0.1rem;
+  vertical-align: text-bottom;
+  animation: blink 0.8s steps(2) infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── Completion Celebration ─────────────────────────────────── */
+
+.celebration-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  top: -10px;
+  animation: confettiFall var(--fall-duration, 3s) ease-out forwards;
+  animation-delay: var(--fall-delay, 0s);
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typingPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.skeleton {
+  @apply bg-muted rounded;
+  background: linear-gradient(90deg, var(--color-muted) 25%, var(--color-card-hover) 50%, var(--color-muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.glass {
+  @apply bg-background/80 backdrop-blur-xl;
+}
